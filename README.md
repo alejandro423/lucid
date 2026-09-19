@@ -1,1 +1,2 @@
-vnudwiaobvewyhiuvkgabwyu
+lucid es un juego 
+
