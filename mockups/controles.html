@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUCID — Controles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12; color: #e8e8f0;
+    font-family: monospace, system-ui, sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+  }
+  .bg-shape { position: fixed; border: 2px solid; pointer-events: none; z-index: 0; }
+  .s1 { width: 90px; height: 90px; top: 10%; left: 8%; border-color: #ffe600; animation: spin 11s linear infinite; opacity: .35; }
+  .s2 { width: 55px; height: 55px; top: 72%; left: 90%; border-color: #00f0ff; animation: spin 8s linear infinite reverse; opacity: .35; }
+  .s3 { width: 36px; height: 36px; top: 45%; left: 92%; border-color: #ff00a0; animation: pulse 2.6s ease-in-out infinite; opacity: .4; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100% { transform: scale(1) rotate(45deg); } 50% { transform: scale(1.35) rotate(45deg); } }
+  .topbar {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 24px; border-bottom: 2px solid #ffe600;
+    background: #141422;
+  }
+  .topbar .logo { color: #ffe600; font-size: 22px; font-weight: bold; letter-spacing: 6px; }
+  .topbar .meta { color: #ffe600; font-size: 14px; }
+  .panel {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 32px auto; padding: 24px;
+    background: #141422; border: 1px solid #ffe600;
+  }
+  .panel h1 { color: #ffe600; font-size: 20px; letter-spacing: 3px; margin-bottom: 20px; }
+  .perfil { margin-bottom: 20px; }
+  .perfil label { color: #00f0ff; font-size: 14px; margin-right: 8px; }
+  .perfil select {
+    background: #0a0a12; color: #e8e8f0; border: 1px solid #00f0ff;
+    padding: 8px 12px; font-family: inherit; font-size: 14px; cursor: pointer;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; color: #ff00a0; font-size: 13px; letter-spacing: 2px; padding: 8px; border-bottom: 2px solid #ff00a0; }
+  td { padding: 10px 8px; border-bottom: 1px solid #33334d; font-size: 14px; }
+  tr:hover td { background: #1e1e30; }
+  .tecla {
+    display: inline-block; min-width: 90px; text-align: center;
+    padding: 6px 12px; border: 1px solid #00f0ff; color: #00f0ff; font-size: 14px;
+  }
+  tr.esperando .tecla { border-color: #ffe600; color: #ffe600; animation: parpadeo 0.8s steps(2) infinite; }
+  @keyframes parpadeo { 50% { opacity: 0.35; } }
+  .btn-remap {
+    padding: 6px 14px; font-family: inherit; font-size: 13px; cursor: pointer;
+    background: #0a0a12; color: #ff00a0; border: 1px solid #ff00a0;
+    transition: background-color 200ms, color 200ms;
+  }
+  .btn-remap:hover { background: #ff00a0; color: #0a0a12; }
+  .nav-links { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 10px 22px; text-decoration: none; cursor: pointer;
+    font-family: inherit; font-size: 14px; background: #0a0a12; color: #00f0ff;
+    border: 2px solid #00f0ff; transition: background-color 200ms, color 200ms;
+  }
+  .btn:hover { background: #00f0ff; color: #0a0a12; }
+  .btn.magenta { color: #ff00a0; border-color: #ff00a0; }
+  .btn.magenta:hover { background: #ff00a0; color: #0a0a12; }
+  .btn:focus-visible, .btn-remap:focus-visible, select:focus-visible { outline: 2px solid #ffe600; outline-offset: 2px; }
+  #msg { margin-top: 12px; color: #ffe600; font-size: 13px; min-height: 18px; }
+</style>
+</head>
+<body>
+  <div class="bg-shape s1"></div>
+  <div class="bg-shape s2"></div>
+  <div class="bg-shape s3"></div>
+
+  <header class="topbar">
+    <span class="logo">LUCID</span>
+    <span class="meta">21:47 &nbsp;|&nbsp; invitado</span>
+  </header>
+
+  <main class="panel">
+    <h1>CONTROLES</h1>
+
+    <div class="perfil">
+      <label for="perfil">Perfil:</label>
+      <select id="perfil">
+        <option value="teclado" selected>Teclado</option>
+        <option value="mando">Mando</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>ACCION</th><th>TECLA</th><th></th></tr>
+      </thead>
+      <tbody id="binds">
+        <tr><td>Moverse</td><td><span class="tecla">W A S D</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+        <tr><td>Saltar / doble salto</td><td><span class="tecla">Espacio</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+        <tr><td>Dash</td><td><span class="tecla">Shift</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+        <tr><td>Campo de fuerza</td><td><span class="tecla">Q</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+        <tr><td>Interactuar</td><td><span class="tecla">E</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+        <tr><td>Transformarse</td><td><span class="tecla">Tab</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+        <tr><td>Teleport</td><td><span class="tecla">Mouse</span></td><td><button class="btn-remap" type="button">Remapear</button></td></tr>
+      </tbody>
+    </table>
+    <p id="msg"></p>
+
+    <div class="nav-links">
+      <a class="btn magenta" href="ajustes.html">Volver a Ajustes</a>
+    </div>
+  </main>
+
+<script>
+  var msg = document.getElementById('msg');
+  var filaActiva = null;
+
+  document.querySelectorAll('.btn-remap').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (filaActiva) filaActiva.classList.remove('esperando');
+      filaActiva = btn.closest('tr');
+      filaActiva.classList.add('esperando');
+      var tecla = filaActiva.querySelector('.tecla');
+      tecla.textContent = 'Pulsa una tecla...';
+      msg.textContent = 'Pulsa la nueva tecla para esta accion (Esc cancela).';
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!filaActiva) return;
+    e.preventDefault();
+    var tecla = filaActiva.querySelector('.tecla');
+    if (e.key === 'Escape') {
+      tecla.textContent = tecla.dataset.original || tecla.textContent;
+      msg.textContent = 'Remapeo cancelado.';
+    } else {
+      var nombre = e.key === ' ' ? 'Espacio' : e.key;
+      tecla.textContent = nombre;
+      tecla.dataset.original = nombre;
+      var accion = filaActiva.cells[0].textContent;
+      msg.textContent = 'Accion "' + accion + '" ahora usa: ' + nombre;
+    }
+    filaActiva.classList.remove('esperando');
+    filaActiva = null;
+  });
+
+  document.getElementById('perfil').addEventListener('change', function (e) {
+    msg.textContent = 'Perfil cambiado a: ' + (e.target.value === 'mando' ? 'Mando' : 'Teclado') + ' (maqueta: los binds no cambian).';
+  });
+</script>
+</body>
+</html>

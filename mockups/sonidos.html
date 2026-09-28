@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUCID — Sonidos</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12; color: #e8e8f0;
+    font-family: monospace, system-ui, sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+  }
+  .bg-shape { position: fixed; border: 2px solid; pointer-events: none; z-index: 0; }
+  .s1 { width: 100px; height: 100px; top: 15%; left: 85%; border-color: #ff00a0; animation: spin 12s linear infinite; opacity: .35; }
+  .s2 { width: 60px; height: 60px; top: 70%; left: 5%; border-color: #00f0ff; animation: spin 9s linear infinite reverse; opacity: .35; }
+  .s3 { width: 40px; height: 40px; top: 40%; left: 10%; border-color: #ffe600; animation: pulse 2s ease-in-out infinite; opacity: .4; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100% { transform: scale(1) rotate(45deg); } 50% { transform: scale(1.35) rotate(45deg); } }
+  .topbar {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 24px; border-bottom: 2px solid #ff00a0;
+    background: #141422;
+  }
+  .topbar .logo { color: #ff00a0; font-size: 22px; font-weight: bold; letter-spacing: 6px; }
+  .topbar .meta { color: #ffe600; font-size: 14px; }
+  .panel {
+    position: relative; z-index: 1;
+    max-width: 640px; margin: 32px auto; padding: 24px;
+    background: #141422; border: 1px solid #ff00a0;
+  }
+  .panel h1 { color: #ff00a0; font-size: 20px; letter-spacing: 3px; margin-bottom: 20px; }
+  .fila { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .fila .nombre { width: 130px; color: #ffe600; font-size: 15px; }
+  .fila input[type="range"] { flex: 1; accent-color: #00f0ff; cursor: pointer; }
+  .fila .valor { width: 48px; text-align: right; color: #00f0ff; font-size: 14px; }
+  .toggle {
+    display: inline-block; width: 52px; height: 26px; border: 2px solid #ff00a0;
+    border-radius: 13px; position: relative; cursor: pointer; background: #0a0a12; flex-shrink: 0;
+  }
+  .toggle .nub {
+    position: absolute; top: 2px; left: 3px; width: 18px; height: 18px;
+    background: #55556a; border-radius: 50%; transition: left 200ms, background-color 200ms;
+  }
+  .toggle.on .nub { left: 27px; background: #ff00a0; }
+  .mute-fila { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .mute-fila span { color: #e8e8f0; font-size: 14px; }
+  .nav-links { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 10px 22px; font-family: inherit; font-size: 14px;
+    background: #0a0a12; color: #00f0ff; border: 2px solid #00f0ff; cursor: pointer;
+    text-decoration: none; transition: background-color 200ms, color 200ms;
+  }
+  .btn:hover { background: #00f0ff; color: #0a0a12; }
+  .btn.magenta { color: #ff00a0; border-color: #ff00a0; }
+  .btn.magenta:hover { background: #ff00a0; color: #0a0a12; }
+  .btn:focus-visible { outline: 2px solid #ffe600; outline-offset: 2px; }
+  #msg { margin-top: 12px; color: #ffe600; font-size: 13px; min-height: 18px; }
+</style>
+</head>
+<body>
+  <div class="bg-shape s1"></div>
+  <div class="bg-shape s2"></div>
+  <div class="bg-shape s3"></div>
+
+  <header class="topbar">
+    <span class="logo">LUCID</span>
+    <span class="meta">21:47 &nbsp;|&nbsp; invitado</span>
+  </header>
+
+  <main class="panel">
+    <h1>SONIDOS</h1>
+
+    <div class="fila">
+      <span class="nombre">Master</span>
+      <input type="range" id="vol-master" min="0" max="100" value="80">
+      <span class="valor" id="val-master">80</span>
+    </div>
+    <div class="fila">
+      <span class="nombre">Musica</span>
+      <input type="range" id="vol-musica" min="0" max="100" value="65">
+      <span class="valor" id="val-musica">65</span>
+    </div>
+    <div class="fila">
+      <span class="nombre">SFX</span>
+      <input type="range" id="vol-sfx" min="0" max="100" value="90">
+      <span class="valor" id="val-sfx">90</span>
+    </div>
+
+    <div class="mute-fila">
+      <div class="toggle" id="mute-master" role="switch" aria-checked="false" tabindex="0"><div class="nub"></div></div>
+      <span>Silenciar todo (Mute Master)</span>
+    </div>
+    <div class="mute-fila">
+      <div class="toggle" id="mute-musica" role="switch" aria-checked="false" tabindex="0"><div class="nub"></div></div>
+      <span>Silenciar musica</span>
+    </div>
+
+    <div class="nav-links">
+      <button class="btn" id="btn-probar" type="button">Probar sonido</button>
+    </div>
+    <p id="msg"></p>
+
+    <div class="nav-links">
+      <a class="btn magenta" href="ajustes.html">Volver a Ajustes</a>
+    </div>
+  </main>
+
+<script>
+  // Sliders: reflejan su valor numerico
+  ['master', 'musica', 'sfx'].forEach(function (nombre) {
+    var slider = document.getElementById('vol-' + nombre);
+    var etiqueta = document.getElementById('val-' + nombre);
+    slider.addEventListener('input', function () { etiqueta.textContent = slider.value; });
+  });
+
+  // Toggles mute
+  function cablearToggle(id) {
+    var el = document.getElementById(id);
+    function flip() {
+      el.classList.toggle('on');
+      el.setAttribute('aria-checked', el.classList.contains('on') ? 'true' : 'false');
+    }
+    el.addEventListener('click', flip);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flip(); }
+    });
+  }
+  cablearToggle('mute-master');
+  cablearToggle('mute-musica');
+
+  // Beep con WebAudio, sin assets externos
+  document.getElementById('btn-probar').addEventListener('click', function () {
+    var msg = document.getElementById('msg');
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      var ctx = new Ctx();
+      var sfx = document.getElementById('vol-sfx').value / 100;
+      var master = document.getElementById('vol-master').value / 100;
+      var muteado = document.getElementById('mute-master').classList.contains('on');
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = 440;
+      gain.gain.value = muteado ? 0 : 0.25 * sfx * master;
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.25);
+      msg.textContent = muteado ? 'Silenciado: beep a volumen 0.' : 'Beep reproducido (440 Hz, 0.25 s).';
+    } catch (err) {
+      msg.textContent = 'Este navegador no soporta WebAudio.';
+    }
+  });
+</script>
+</body>
+</html>

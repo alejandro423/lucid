@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd943a6b0b24510be4403d907ccd264, type: 3}
+  m_Name: LucidSettingsDatabase
+  m_EditorClassIdentifier:
+  version: 1
+  categories:
+  - categoryId: Audio
+    displayName: Audio
+    settings:
+    - id: master
+      displayName: Master
+      type: 0
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 50
+      floatValue: 50
+      defaultBoolValue: 0
+      boolValue: 0
+      options: []
+      defaultIntValue: 0
+      intValue: 0
+    - id: music
+      displayName: Music
+      type: 0
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 100
+      floatValue: 100
+      defaultBoolValue: 0
+      boolValue: 0
+      options: []
+      defaultIntValue: 0
+      intValue: 0
+    - id: sfx
+      displayName: SFX
+      type: 0
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 100
+      floatValue: 100
+      defaultBoolValue: 0
+      boolValue: 0
+      options: []
+      defaultIntValue: 0
+      intValue: 0
+  - categoryId: Video
+    displayName: Video
+    settings:
+    - id: fullscreen
+      displayName: Fullscreen
+      type: 1
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 50
+      floatValue: 50
+      defaultBoolValue: 1
+      boolValue: 1
+      options: []
+      defaultIntValue: 0
+      intValue: 0
+    - id: vsync
+      displayName: VSync
+      type: 1
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 50
+      floatValue: 50
+      defaultBoolValue: 1
+      boolValue: 1
+      options: []
+      defaultIntValue: 0
+      intValue: 0
+    - id: quality
+      displayName: Quality
+      type: 2
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 50
+      floatValue: 50
+      defaultBoolValue: 0
+      boolValue: 0
+      options:
+      - Low
+      - Medium
+      - High
+      defaultIntValue: 0
+      intValue: 0
+  - categoryId: Gameplay
+    displayName: Gameplay
+    settings:
+    - id: noflash
+      displayName: No Flash
+      type: 1
+      minValue: 0
+      maxValue: 100
+      defaultFloatValue: 50
+      floatValue: 50
+      defaultBoolValue: 0
+      boolValue: 0
+      options: []
+      defaultIntValue: 0
+      intValue: 0

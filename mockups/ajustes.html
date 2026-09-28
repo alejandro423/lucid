@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUCID — Ajustes</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12; color: #e8e8f0;
+    font-family: monospace, system-ui, sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+  }
+  /* fondo geometrico OSB */
+  .bg-shape { position: fixed; border: 2px solid; pointer-events: none; z-index: 0; }
+  .s1 { width: 120px; height: 120px; top: 12%; left: 6%; border-color: #00f0ff; animation: spin 14s linear infinite; opacity: .35; }
+  .s2 { width: 70px; height: 70px; top: 65%; left: 88%; border-color: #ff00a0; animation: spin 10s linear infinite reverse; opacity: .35; }
+  .s3 { width: 46px; height: 46px; top: 30%; left: 80%; border-color: #ffe600; animation: pulse 2.4s ease-in-out infinite; opacity: .4; }
+  .s4 { width: 90px; height: 90px; top: 78%; left: 12%; border-color: #ff00a0; animation: pulse 3.2s ease-in-out infinite; opacity: .3; }
+  .s5 { width: 34px; height: 34px; top: 55%; left: 45%; border-color: #00f0ff; animation: spin 7s linear infinite; opacity: .25; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100% { transform: scale(1) rotate(45deg); } 50% { transform: scale(1.35) rotate(45deg); } }
+  /* topbar */
+  .topbar {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 24px; border-bottom: 2px solid #00f0ff;
+    background: #141422;
+  }
+  .topbar .logo { color: #00f0ff; font-size: 22px; font-weight: bold; letter-spacing: 6px; }
+  .topbar .meta { color: #ffe600; font-size: 14px; }
+  /* layout */
+  .layout { position: relative; z-index: 1; display: flex; max-width: 960px; margin: 32px auto; gap: 0; }
+  .sidebar {
+    width: 220px; background: #141422; border: 1px solid #00f0ff;
+    border-right: none; padding: 16px 0;
+  }
+  .sidebar h2 { color: #ff00a0; font-size: 14px; padding: 0 16px 12px; letter-spacing: 2px; }
+  .sidebar a {
+    display: block; padding: 12px 16px; color: #e8e8f0; text-decoration: none;
+    border-left: 3px solid transparent; font-size: 15px; cursor: pointer;
+    transition: background-color 200ms, border-color 200ms;
+  }
+  .sidebar a:hover, .sidebar a.activa { background: #1e1e30; border-left-color: #ffe600; color: #ffe600; }
+  .contenido {
+    flex: 1; background: #141422; border: 1px solid #00f0ff; padding: 24px;
+  }
+  .contenido h1 { color: #00f0ff; font-size: 20px; margin-bottom: 20px; letter-spacing: 3px; }
+  .setting { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px dashed #33334d; }
+  .setting label.titulo { display: block; color: #ffe600; margin-bottom: 8px; font-size: 15px; }
+  .setting .desc { color: #8888aa; font-size: 12px; margin-top: 6px; }
+  input[type="range"] { width: 100%; accent-color: #ff00a0; cursor: pointer; }
+  .toggle {
+    display: inline-block; width: 52px; height: 26px; border: 2px solid #00f0ff;
+    border-radius: 13px; position: relative; cursor: pointer; background: #0a0a12;
+  }
+  .toggle .nub {
+    position: absolute; top: 2px; left: 3px; width: 18px; height: 18px;
+    background: #55556a; border-radius: 50%; transition: left 200ms, background-color 200ms;
+  }
+  .toggle.on .nub { left: 27px; background: #00f0ff; }
+  select {
+    background: #0a0a12; color: #e8e8f0; border: 1px solid #ff00a0;
+    padding: 8px 12px; font-family: inherit; font-size: 14px; cursor: pointer;
+  }
+  .nav-links { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 10px 22px; text-decoration: none; cursor: pointer;
+    font-family: inherit; font-size: 14px; background: #0a0a12; color: #00f0ff;
+    border: 2px solid #00f0ff; transition: background-color 200ms, color 200ms;
+  }
+  .btn:hover { background: #00f0ff; color: #0a0a12; }
+  .btn.magenta { color: #ff00a0; border-color: #ff00a0; }
+  .btn.magenta:hover { background: #ff00a0; color: #0a0a12; }
+  .btn:focus-visible, .sidebar a:focus-visible { outline: 2px solid #ffe600; outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <div class="bg-shape s1"></div>
+  <div class="bg-shape s2"></div>
+  <div class="bg-shape s3"></div>
+  <div class="bg-shape s4"></div>
+  <div class="bg-shape s5"></div>
+
+  <header class="topbar">
+    <span class="logo">LUCID</span>
+    <span class="meta">21:47 &nbsp;|&nbsp; invitado</span>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <h2>CATEGORIAS</h2>
+      <a href="sonidos.html">Sonido</a>
+      <a href="controles.html">Controles</a>
+      <a href="#" class="activa">Video</a>
+      <a href="#">Gameplay</a>
+    </nav>
+    <main class="contenido">
+      <h1>AJUSTES</h1>
+
+      <div class="setting">
+        <label class="titulo" for="brillo">Brillo de pantalla</label>
+        <input type="range" id="brillo" min="0" max="100" value="70">
+        <p class="desc">Ejemplo de slider. Ajusta la luminosidad general del juego.</p>
+      </div>
+
+      <div class="setting">
+        <label class="titulo">VSync</label>
+        <div class="toggle on" id="tg-vsync" role="switch" aria-checked="true" tabindex="0"><div class="nub"></div></div>
+        <p class="desc">Ejemplo de toggle. Sincroniza los fotogramas con el monitor.</p>
+      </div>
+
+      <div class="setting">
+        <label class="titulo" for="calidad">Calidad grafica</label>
+        <select id="calidad">
+          <option>Baja</option>
+          <option selected>Media</option>
+          <option>Alta</option>
+        </select>
+        <p class="desc">Ejemplo de dropdown. Nivel de detalle de efectos y sombras.</p>
+      </div>
+
+      <div class="nav-links">
+        <a class="btn magenta" href="sonidos.html">Ir a Sonidos</a>
+        <a class="btn magenta" href="controles.html">Ir a Controles</a>
+        <a class="btn" href="#">Volver</a>
+      </div>
+    </main>
+  </div>
+
+<script>
+  var tg = document.getElementById('tg-vsync');
+  function flipToggle() {
+    tg.classList.toggle('on');
+    tg.setAttribute('aria-checked', tg.classList.contains('on') ? 'true' : 'false');
+  }
+  tg.addEventListener('click', flipToggle);
+  tg.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipToggle(); }
+  });
+</script>
+</body>
+</html>
