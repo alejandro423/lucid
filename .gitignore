@@ -1,13 +1,25 @@
-# Archivos temporales
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+UserSettings/
+
+.vs/
+.idea/
+
+*.csproj
+*.unityproj
+*.sln
+*.suo
 *.tmp
-*.log
+*.user
+*.userprefs
+*.pidb
+*.booproj
 
-# Archivos compilados de C++
-*.exe
-*.out
-*.o
-
-# Carpetas de compilación
-build/
-bin/
-obj/
+.DS_Store
+Thumbs.db
